@@ -22,7 +22,7 @@ if exist "%VSCODE_TARGET%" (
     del "%VSCODE_TARGET%"
 )
 echo Tworzenie symlinka dla VSCode keybindings.json...
-mklink "%VSCODE_TARGET%" "%DOTFILES%\keybindings.json"
+mklink "%VSCODE_TARGET%" "%DOTFILES%\vsCode\keybindings.json"
 
 echo Gotowe!
 pause
