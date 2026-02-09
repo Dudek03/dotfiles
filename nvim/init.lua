@@ -139,7 +139,24 @@ require("lazy").setup({
 		config = function()
 			require("mini.pairs").setup()
 			require("mini.surround").setup()
-			require("mini.files").setup()
+
+			local MiniFiles = require("mini.files")
+			MiniFiles.setup()
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "MiniFilesBufferCreate",
+				callback = function(args)
+					local buf_id = args.data.buf_id
+
+					local function open_and_close()
+						MiniFiles.go_in({ close_on_file = true })
+					end
+
+					vim.keymap.set("n", "<CR>", open_and_close, { buffer = buf_id, desc = "Open and Close" })
+
+					vim.keymap.set("n", "l", open_and_close, { buffer = buf_id, desc = "Open and Close" })
+				end,
+			})
 		end,
 	},
 
@@ -153,6 +170,28 @@ require("lazy").setup({
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local telescope = require("telescope")
+			local actions = require("telescope.actions")
+
+			telescope.setup({
+				defaults = {
+					mappings = {
+						i = {
+							["<C-j>"] = actions.move_selection_next,
+							["<C-k>"] = actions.move_selection_previous,
+							["<C-l>"] = actions.select_default,
+						},
+						n = {
+							["<C-j>"] = actions.move_selection_next,
+							["<C-k>"] = actions.move_selection_previous,
+							["<C-l>"] = actions.select_default,
+							["<C-h>"] = actions.close,
+						},
+					},
+				},
+			})
+		end,
 	},
 
 	-- formatting (Conform)
@@ -326,6 +365,7 @@ vim.keymap.set("n", "<leader>sg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader><space>", builtin.buffers, {})
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
 vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
 
 -- errors
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show Error Message" })
