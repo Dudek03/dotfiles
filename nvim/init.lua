@@ -190,6 +190,15 @@ require("lazy").setup({
 						},
 					},
 				},
+				pickers = {
+					buffers = {
+						mappings = {
+							n = {
+								["dd"] = actions.delete_buffer,
+							},
+						},
+					},
+				},
 			})
 		end,
 	},
