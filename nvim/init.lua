@@ -253,9 +253,16 @@ require("lazy").setup({
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
+					--new
+					["<C-j>"] = cmp.mapping.select_next_item(),
+					["<C-k>"] = cmp.mapping.select_prev_item(),
+					["<C-l>"] = cmp.mapping.confirm({ select = true }),
+
+					--old
 					["<C-n>"] = cmp.mapping.select_next_item(),
 					["<C-p>"] = cmp.mapping.select_prev_item(),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+
 					["<C-Space>"] = cmp.mapping.complete(),
 				}),
 				sources = { { name = "nvim_lsp" }, { name = "luasnip" }, { name = "path" } },
