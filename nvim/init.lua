@@ -163,7 +163,14 @@ require("lazy").setup({
 	-- GIT & WAKATIME
 	{ "lewis6991/gitsigns.nvim", opts = {} },
 	{ "wakatime/vim-wakatime" },
-	{ "ellisonleao/carbon-now.nvim", cmd = "CarbonNow" },
+	{
+		"ellisonleao/carbon-now.nvim",
+		lazy = true,
+		cmd = "CarbonNow",
+		config = function()
+			require("carbon-now").setup()
+		end,
+	},
 
 	-- TELESCOPE
 	{
