@@ -357,13 +357,6 @@ require("lazy").setup({
 			smear_insert_mode = false,
 		},
 	},
-	-- break bad habits
-	{
-		"m4xshen/hardtime.nvim",
-		lazy = false,
-		dependencies = { "MunifTanjim/nui.nvim" },
-		opts = {},
-	},
 })
 
 -- ========================================================================== --
