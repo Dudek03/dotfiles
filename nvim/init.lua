@@ -183,6 +183,13 @@ require("lazy").setup({
 
 			telescope.setup({
 				defaults = {
+					file_ignore_patterns = {
+						"%.git[/\\]",
+						"node_modules",
+						"%.venv",
+						"build/",
+						"dist/",
+					},
 					mappings = {
 						i = {
 							["<C-j>"] = actions.move_selection_next,
@@ -193,23 +200,18 @@ require("lazy").setup({
 							["<C-j>"] = actions.move_selection_next,
 							["<C-k>"] = actions.move_selection_previous,
 							["<C-l>"] = actions.select_default,
-							["<C-h>"] = actions.close,
+							["dd"] = actions.delete_buffer,
 						},
 					},
 				},
 				pickers = {
-					buffers = {
-						mappings = {
-							n = {
-								["dd"] = actions.delete_buffer,
-							},
-						},
+					find_files = {
+						find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
 					},
 				},
 			})
 		end,
 	},
-
 	-- formatting (Conform)
 	{
 		"stevearc/conform.nvim",
