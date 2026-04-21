@@ -26,6 +26,12 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
+-- Autosave
+vim.api.nvim_create_autocmd({ "FocusLost", "BufLeave" }, {
+	desc = "Auto-zapis na zmianę bufora lub utratę fokusu okna",
+	pattern = "*",
+	command = "silent! update",
+})
 -- ========================================================================== --
 --  3. LAZY.NVIM BOOTSTRAP
 -- ========================================================================== --
