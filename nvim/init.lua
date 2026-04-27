@@ -309,16 +309,30 @@ require("lazy").setup({
 			local dapui = require("dapui")
 
 			require("mason-nvim-dap").setup({
-				ensure_installed = { "python", "codelldb", "netcoredbg", "js-debug-adapter" },
+				ensure_installed = {
+					"python",           -- Python (debugpy)
+					"codelldb",         -- C, C++, Rust
+					"coreclr",          -- C# (.NET / netcoredbg)
+					"js-debug-adapter", -- JavaScript / TypeScript
+				},
 				automatic_installation = true,
-				handlers = {},
+				handlers = {
+					function(config)
+						require("mason-nvim-dap").default_setup(config)
+					end,
+					python = function(config) end,
+				},
 			})
 
-			local path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe"
-			path = path:gsub("/", "\\")
-			if vim.loop.fs_stat(path) then
-				require("dap-python").setup(path)
+			local is_windows = vim.fn.has("win32") == 1
+			local debugpy_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/"
+			
+			if is_windows then
+				debugpy_path = debugpy_path .. "Scripts/python.exe"
+			else
+				debugpy_path = debugpy_path .. "bin/python"
 			end
+			require("dap-python").setup(debugpy_path)
 
 			dapui.setup()
 			dap.listeners.before.attach.dapui_config = function()
