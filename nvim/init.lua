@@ -310,9 +310,9 @@ require("lazy").setup({
 
 			require("mason-nvim-dap").setup({
 				ensure_installed = {
-					"python",           -- Python (debugpy)
-					"codelldb",         -- C, C++, Rust
-					"coreclr",          -- C# (.NET / netcoredbg)
+					"python", -- Python (debugpy)
+					"codelldb", -- C, C++, Rust
+					"coreclr", -- C# (.NET / netcoredbg)
 					"js-debug-adapter", -- JavaScript / TypeScript
 				},
 				automatic_installation = true,
@@ -326,7 +326,7 @@ require("lazy").setup({
 
 			local is_windows = vim.fn.has("win32") == 1
 			local debugpy_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/"
-			
+
 			if is_windows then
 				debugpy_path = debugpy_path .. "Scripts/python.exe"
 			else
@@ -435,7 +435,12 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>sf", builtin.find_files, {})
 vim.keymap.set("n", "<leader>sg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader><space>", builtin.buffers, {})
+vim.keymap.set("n", "<leader><space>", function()
+	require("telescope.builtin").buffers({
+		sort_mru = true,
+		ignore_current_buffer = true,
+	})
+end, { desc = "Telescope Buffers (Alt-Tab)" })
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
 vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
