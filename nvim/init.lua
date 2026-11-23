@@ -53,6 +53,13 @@ vim.opt.rtp:prepend(lazypath)
 -- ========================================================================== --
 require("lazy").setup({
 
+	--RUST
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^9",
+		lazy = false,
+	},
+
 	-- UI
 	{
 		"cyberdream.nvim",
